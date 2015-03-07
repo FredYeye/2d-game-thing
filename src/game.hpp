@@ -11,6 +11,7 @@ class game
 		void CreateEntity(EntityType entityType);
 		void HandleButtons(const uint8_t buttons);
 		void UpdatePlayer();
+		void UpdateEntities();
 
 	private:
 		std::vector<entity> entityList;

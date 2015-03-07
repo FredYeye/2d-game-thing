@@ -6,13 +6,13 @@
 
 #include "game.hpp"
 #include "file.hpp"
-// #include "animations.hpp"
 
 
 void game::DoStuff(const uint8_t buttons, render &render)
 {
 	HandleButtons(buttons);
-	UpdatePlayer();
+	// UpdatePlayer();
+	UpdateEntities();
 
 	render.SetBackground(0, 0);
 	render.DrawSprites(entityList);
@@ -33,21 +33,30 @@ void game::HandleButtons(const uint8_t buttons)
 	int8_t speedX = -((buttons & 0x04) >> 2) + ((buttons & 0x08) >> 3);
 	int8_t speedY = -((buttons & 0x01)     ) + ((buttons & 0x02) >> 1);
 	player.SetSpeed(speedX, speedY);
-
-	if(speedX)
-	{
-		player.SetFlipX(uint8_t(speedX) >> 7);
-		player.SetEntityAction(EntityAction::walking);
-	}
-	else
-	{
-		player.SetEntityAction(EntityAction::idle);
-	}
 }
 
 
 void game::UpdatePlayer()
 {
-	Speed speed = entityList[0].GetSpeed();
-	entityList[0].SetRelativePosition(speed.x, speed.y);
+}
+
+
+void game::UpdateEntities()
+{
+	for(auto &e : entityList)
+	{
+		int8_t speedX = e.GetSpeed().x;
+		if(speedX)
+		{
+			e.SetFlipX(uint8_t(speedX) >> 7);
+			e.SetEntityAction(EntityAction::walking);
+		}
+		else
+		{
+			e.SetEntityAction(EntityAction::idle);
+		}
+
+		e.UpdatePos();
+		e.UpdateAnim();
+	}
 }

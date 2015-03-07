@@ -3,7 +3,7 @@
 
 #include "render.hpp"
 #include "file.hpp"
-// #include "animations.hpp"
+#include "animations.hpp"
 
 
 const PixelArray* const render::GetPixelPtr() const
@@ -36,14 +36,13 @@ void render::DrawSprites(const std::vector<entity> &entityList)
 		const uint16_t type = uint16_t(e.GetEntityType());
 		const std::vector<uint16_t> &spriteSheet = spriteSheets[type];
 
-		const uint8_t action = uint8_t(e.GetEntityAction());
-		const uint8_t w = spriteRectList[type][action].w + 1;
-		const uint8_t h = spriteRectList[type][action].h + 1;
+		const EntityState state = e.GetEntityState();
+		const uint8_t w = spriteRectList[type][uint8_t(state.action)].w + 1;
+		const uint8_t h = spriteRectList[type][uint8_t(state.action)].h + 1;
 
 		Position pos = e.GetPosition();
 
-		std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][uint8_t(e.GetEntityAction())], e.GetFlip());
-																					   //animationList[type][action][0]
+		std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][animationList[type][uint8_t(state.action)][state.animState]], e.GetFlip());
 
 		for(uint16_t y = 0; y < h; ++y)
 		{

@@ -70,25 +70,39 @@ const EntityType entity::GetEntityType() const
 
 void entity::SetEntityAction(EntityAction action)
 {
-	entityState.action = action;
+	if(action != entityState.action)
+	{
+		entityState.action = action;
+		entityState.animFrame = 0;
+		entityState.animState = 0;
+	}
 }
 
-EntityAction entity::GetEntityAction() const
+
+const EntityState& entity::GetEntityState() const
 {
-	return entityState.action;
+	return entityState;
 }
 
-// const uint8_t entity::GetAnimState() const
-// {
-	// return entityState.animState;
-// }
 
-// const uint8_t entity::GetAnimFrame() const
-// {
-	// return entityState.animFrame;
-// }
+void entity::UpdateAnim()
+{
+	if(!frameList[uint16_t(entityType)][uint8_t(entityState.action)].empty())
+	{
+		if(++entityState.animFrame > frameList[uint16_t(entityType)][uint8_t(entityState.action)][entityState.animState])
+		{
+			entityState.animFrame = 0;
+			if(++entityState.animState == animationList[uint16_t(entityType)][uint8_t(entityState.action)].size())
+			{
+				entityState.animState = 0;
+			}
+		}
+	}
+}
 
-// void entity::UpdateAnim(const uint8_t entityIndex)
-// {
 
-// }
+void entity::UpdatePos()
+{
+	position.x += speed.x;
+	position.y += speed.y;
+}

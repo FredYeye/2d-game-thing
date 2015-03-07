@@ -43,10 +43,9 @@ class entity
 		const uint8_t GetFlip() const;
 		const EntityType GetEntityType() const;
 		void SetEntityAction(EntityAction action);
-		EntityAction GetEntityAction() const;
-		// const uint8_t GetAnimState() const;
-		// const uint8_t GetAnimFrame() const;
-		// void UpdateAnim(const uint8_t entityIndex);
+		const EntityState& GetEntityState() const;
+		void UpdateAnim();
+		void UpdatePos();
 
 	private:
 		Position position;
