@@ -40,9 +40,9 @@ void render::DrawSprites(const std::vector<entity> &entityList)
 		const uint8_t w = spriteRectList[type][uint8_t(state.action)].w + 1;
 		const uint8_t h = spriteRectList[type][uint8_t(state.action)].h + 1;
 
-		Position pos = e.GetPosition();
+		const Position pos = e.GetPosition();
 
-		std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][animationList[type][uint8_t(state.action)][state.animState]], e.GetFlip());
+		const std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][animationList[type][uint8_t(state.action)][state.animState]], e.GetFlip());
 
 		for(uint16_t y = 0; y < h; ++y)
 		{

@@ -5,16 +5,20 @@
 #include "animations.hpp"
 
 
-entity::entity(EntityType type)
+entity::entity(EntityType type) : entityType(type)
 {
-	entityType = type;
 }
 
 
-void entity::SetPosition(const uint16_t x, const uint16_t y)
+void entity::SetPosition(const uint16_t x, const uint16_t y, const uint8_t z)
 {
 	position.x = x;
 	position.y = y;
+	position.z = z;
+
+	position.xFrac = 0;
+	position.yFrac = 0;
+	position.zFrac = 0;
 }
 
 
@@ -31,10 +35,12 @@ void entity::SetRelativePosition(const int16_t x, const int16_t y)
 }
 
 
-void entity::SetSpeed(const int8_t x, const int8_t y)
+void entity::SetSpeed(const uint8_t x, const uint8_t xFrac, const uint8_t y, const uint8_t yFrac)
 {
 	speed.x = x;
+	speed.xFrac = xFrac;
 	speed.y = y;
+	speed.yFrac = yFrac;
 }
 
 
@@ -46,19 +52,31 @@ const Speed& entity::GetSpeed() const
 
 void entity::SetFlipX(bool flipX)
 {
-	flip = (flip & 2) | uint8_t(flipX);
+	flip = (flip & 2) | flipX;
 }
 
 
 void entity::SetFlipY(bool flipY)
 {
-	flip = (flip & 1) | (uint8_t(flipY) << 1);
+	flip = (flip & 1) | (flipY << 1);
 }
 
 
 const uint8_t entity::GetFlip() const
 {
 	return flip;
+}
+
+
+void entity::flipDirectionX(bool xDir)
+{
+	direction = (direction & 2) | xDir;
+}
+
+
+void entity::flipDirectionY(bool yDir)
+{
+	direction = (direction & 1) | (yDir << 1);
 }
 
 
@@ -103,6 +121,25 @@ void entity::UpdateAnim()
 
 void entity::UpdatePos()
 {
-	position.x += speed.x;
-	position.y += speed.y;
+	if(!(direction & 1))
+	{
+		position.x += speed.x + (position.xFrac + speed.xFrac >> 8);
+		position.xFrac += speed.xFrac;
+	}
+	else
+	{
+		position.xFrac -= speed.xFrac;
+		position.x -= speed.x + (position.xFrac + speed.xFrac >> 8);
+	}
+
+	if(!(direction & 2))
+	{
+		position.y += speed.y + (position.yFrac + speed.yFrac >> 8);
+		position.yFrac += speed.yFrac;
+	}
+	else
+	{
+		position.yFrac -= speed.yFrac;
+		position.y -= speed.y + (position.yFrac + speed.yFrac >> 8);
+	}
 }

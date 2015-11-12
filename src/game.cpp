@@ -30,9 +30,27 @@ void game::HandleButtons(const uint8_t buttons)
 {
 	entity &player = entityList[0];
 
-	int8_t speedX = -((buttons & 0x04) >> 2) + ((buttons & 0x08) >> 3);
-	int8_t speedY = -((buttons & 0x01)     ) + ((buttons & 0x02) >> 1);
-	player.SetSpeed(speedX, speedY);
+	uint8_t speedX = 0;
+	uint8_t speedXfrac = 0;
+	uint8_t speedY = 0;
+	uint8_t speedYfrac = 0;
+
+	if(buttons & 0b1100)
+	{
+		speedX = 1;
+		speedXfrac = 0x60;
+
+		player.SetFlipX(buttons & 0b0100);
+		player.flipDirectionX(buttons & 0b0100);
+	}
+	if(buttons & 0b0011)
+	{
+		speedY = 1;
+		speedYfrac = 0x40;
+		player.flipDirectionY(buttons & 0b0001);
+	}
+
+	player.SetSpeed(speedX, speedXfrac, speedY, speedYfrac);
 }
 
 
@@ -45,10 +63,8 @@ void game::UpdateEntities()
 {
 	for(auto &e : entityList)
 	{
-		int8_t speedX = e.GetSpeed().x;
-		if(speedX)
+		if(e.GetSpeed().x || e.GetSpeed().xFrac)
 		{
-			e.SetFlipX(uint8_t(speedX) >> 7);
 			e.SetEntityAction(EntityAction::walking);
 		}
 		else
