@@ -58,7 +58,6 @@ int main(void)
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
 		glfwSwapBuffers(window);
-
 		glfwPollEvents();
 
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
@@ -67,6 +66,11 @@ int main(void)
 		{
 			std::this_thread::sleep_for(std::chrono::microseconds(16667) - tus);
 		}
+		// while(tus < std::chrono::microseconds(16667))
+		// {
+			// t2 = std::chrono::high_resolution_clock::now();
+			// tus = std::chrono::duration_cast<std::chrono::microseconds>(t2-t1);
+		// }
 
 		std::chrono::high_resolution_clock::time_point t3 = std::chrono::high_resolution_clock::now();
 		frameTime += std::chrono::duration_cast<std::chrono::microseconds>(t3-t1).count();

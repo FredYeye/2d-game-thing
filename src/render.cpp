@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <algorithm>
 
@@ -25,7 +26,6 @@ void render::LoadResources()
 {
 	backgrounds.push_back(FileToU16vec("bg1.raw.i15"));
 	spriteSheets.push_back(FileToU16vec("spr1.raw.i15"));
-	spriteRectList = FileToSpriteRectList("spriteRects");
 }
 
 
@@ -37,8 +37,8 @@ void render::DrawSprites(const std::vector<entity> &entityList)
 		const std::vector<uint16_t> &spriteSheet = spriteSheets[type];
 
 		const EntityState state = e.GetEntityState();
-		const uint8_t w = spriteRectList[type][uint8_t(state.action)].w + 1;
-		const uint8_t h = spriteRectList[type][uint8_t(state.action)].h + 1;
+		const uint8_t &w = spriteRectList[type][uint8_t(state.action)].w;
+		const uint8_t &h = spriteRectList[type][uint8_t(state.action)].h;
 
 		const Position pos = e.GetPosition();
 
@@ -65,8 +65,8 @@ const std::vector<uint16_t> render::SpriteFromSheet(const std::vector<uint16_t> 
 {
 	const uint16_t sheetW = 192; //set sheet width somewhere
 
-	const uint8_t w = sR.w + 1;
-	const uint8_t h = sR.h + 1;
+	const uint8_t w = sR.w;
+	const uint8_t h = sR.h;
 
 	std::vector<uint16_t> sprite(w * h);
 	const bool flipX = flip & 1;

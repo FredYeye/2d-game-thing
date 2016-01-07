@@ -11,7 +11,7 @@ include_directories(${GLFW_INCLUDE})
 include_directories(${GLFW_LIB})
 find_library(GLFW_LIBRARY "glfw3" HINTS ${GLFW_LIB})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -msse2 -mfpmath=sse")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -march=native")
 add_definitions(-lglfw3 -lopengl32)
 
 set(source_files
@@ -51,19 +51,3 @@ set(header_files
 
 add_executable(imageconvert ${header_files} ${source_files})
 endif(BUILD_IC)
-
-
-set(BUILD_RC TRUE CACHE BOOL "build rectangle list converter")
-IF(BUILD_RC)
-set(source_files
-	src/rectangleconvert/rectangleconvert.cpp
-	src/file.cpp
-	)
-
-set(header_files
-	src/rectangleconvert/rectangleconvert.hpp
-	src/file.hpp
-	)
-
-add_executable(rectangleconvert ${header_files} ${source_files})
-endif(BUILD_RC)

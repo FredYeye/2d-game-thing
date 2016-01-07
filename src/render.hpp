@@ -32,5 +32,11 @@ class render
 		PixelArray screen;
 		std::vector<std::vector<uint16_t>> backgrounds;
 		std::vector<std::vector<uint16_t>> spriteSheets;
-		std::vector<std::vector<SpriteRect>> spriteRectList;
+
+		const std::vector<std::vector<SpriteRect>> spriteRectList
+		{
+			{ //player
+				{0,0,48,80}, {48,0,48,80}, {96,0,48,80}, {144,0,48,80}
+			}
+		};
 };

@@ -68,13 +68,13 @@ const uint8_t entity::GetFlip() const
 }
 
 
-void entity::flipDirectionX(bool xDir)
+void entity::FlipDirectionX(bool xDir)
 {
 	direction = (direction & 2) | xDir;
 }
 
 
-void entity::flipDirectionY(bool yDir)
+void entity::FlipDirectionY(bool yDir)
 {
 	direction = (direction & 1) | (yDir << 1);
 }

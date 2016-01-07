@@ -49,8 +49,8 @@ class entity
 		void SetFlipX(bool flipX);
 		void SetFlipY(bool flipY);
 		const uint8_t GetFlip() const;
-		void flipDirectionX(bool xDir);
-		void flipDirectionY(bool yDir);
+		void FlipDirectionX(bool xDir);
+		void FlipDirectionY(bool yDir);
 
 		const EntityType GetEntityType() const;
 		void SetEntityAction(EntityAction action);

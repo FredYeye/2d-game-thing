@@ -41,13 +41,13 @@ void game::HandleButtons(const uint8_t buttons)
 		speedXfrac = 0x60;
 
 		player.SetFlipX(buttons & 0b0100);
-		player.flipDirectionX(buttons & 0b0100);
+		player.FlipDirectionX(buttons & 0b0100);
 	}
 	if(buttons & 0b0011)
 	{
 		speedY = 1;
 		speedYfrac = 0x40;
-		player.flipDirectionY(buttons & 0b0001);
+		player.FlipDirectionY(buttons & 0b0001);
 	}
 
 	player.SetSpeed(speedX, speedXfrac, speedY, speedYfrac);
