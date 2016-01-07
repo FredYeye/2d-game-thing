@@ -1,8 +1,8 @@
 #pragma once
 
 
-enum class EntityType : uint16_t{player = 0, crate};
-enum class EntityAction : uint8_t{idle = 0, walking};
+enum EntityType : uint16_t{player = 0, crate};
+enum EntityAction : uint8_t{idle = 0, walking};
 
 
 struct Position
