@@ -24,8 +24,9 @@ void render::SetBackground(const uint8_t bg, const uint16_t x)
 
 void render::LoadResources()
 {
-	backgrounds.push_back(FileToU16vec("bg1.raw.i15"));
-	spriteSheets.push_back(FileToU16vec("spr1.raw.i15"));
+	backgrounds.push_back(FileToU16vec("bg1.i15"));
+	spriteSheets.push_back(FileToU16vec("spr1.i15"));
+	spriteSheets.push_back(FileToU16vec("spr2.i15"));
 }
 
 
@@ -42,7 +43,7 @@ void render::DrawSprites(const std::vector<entity> &entityList)
 
 		const Position pos = e.GetPosition();
 
-		const std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][animationList[type][state.action][state.animState]], e.GetFlip());
+		const std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][animationList[type][state.action][state.animState]], e.GetFlip(), sheetWidth[type]);
 
 		for(uint16_t y = 0; y < h; ++y)
 		{
@@ -61,10 +62,8 @@ void render::DrawSprites(const std::vector<entity> &entityList)
 }
 
 
-const std::vector<uint16_t> render::SpriteFromSheet(const std::vector<uint16_t> &spriteSheet, SpriteRect sR, const uint8_t flip) const
+const std::vector<uint16_t> render::SpriteFromSheet(const std::vector<uint16_t> &spriteSheet, SpriteRect sR, const uint8_t flip, uint16_t sheetW) const
 {
-	const uint16_t sheetW = 192; //set sheet width somewhere
-
 	const uint8_t w = sR.w;
 	const uint8_t h = sR.h;
 

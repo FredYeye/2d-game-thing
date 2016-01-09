@@ -27,16 +27,9 @@ class render
 		void LoadResources();
 
 	private:
-		const std::vector<uint16_t> SpriteFromSheet(const std::vector<uint16_t> &spriteSheet, SpriteRect sR, uint8_t flip) const;
+		const std::vector<uint16_t> SpriteFromSheet(const std::vector<uint16_t> &spriteSheet, SpriteRect sR, uint8_t flip, uint16_t sheetW) const;
 
 		PixelArray screen;
 		std::vector<std::vector<uint16_t>> backgrounds;
 		std::vector<std::vector<uint16_t>> spriteSheets;
-
-		const std::vector<std::vector<SpriteRect>> spriteRectList
-		{
-			{ //player
-				{0,0,48,80}, {48,0,48,80}, {96,0,48,80}, {144,0,48,80}
-			}
-		};
 };

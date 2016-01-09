@@ -51,6 +51,11 @@ void game::HandleButtons(const uint8_t buttons)
 	}
 
 	player.SetSpeed(speedX, speedXfrac, speedY, speedYfrac);
+
+	if(buttons & 0b00010000)
+	{
+		entityList[1].SetRelativePosition(1,2);
+	}
 }
 
 

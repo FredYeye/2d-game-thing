@@ -45,6 +45,7 @@ int main(void)
 
 	game game;
 	game.CreateEntity(EntityType::player);
+	game.CreateEntity(EntityType::thing);
 	uint32_t frameTime = 0;
 	uint16_t frames = 0;
 

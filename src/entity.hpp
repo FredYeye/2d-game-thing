@@ -1,7 +1,7 @@
 #pragma once
 
 
-enum EntityType : uint16_t{player = 0, crate};
+enum EntityType : uint16_t{player = 0, thing};
 enum EntityAction : uint8_t{idle = 0, walking};
 
 
