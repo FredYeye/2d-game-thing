@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "game.hpp"
-#include "file.hpp"
 
 
 void game::DoStuff(const uint8_t buttons, render &render)
@@ -14,8 +13,8 @@ void game::DoStuff(const uint8_t buttons, render &render)
 	// UpdatePlayer();
 	UpdateEntities();
 
-	render.SetBackground(0, 0);
-	render.DrawSprites(entityList);
+	render.SetBackground(1, viewportX);
+	render.DrawSprites(entityList, viewportX);
 }
 
 
@@ -54,7 +53,17 @@ void game::HandleButtons(const uint8_t buttons)
 
 	if(buttons & 0b00010000)
 	{
-		entityList[1].SetRelativePosition(1,2);
+		if(viewportX < stageWidth)
+		{
+			++viewportX;
+		}
+	}
+	if(buttons & 0b00100000)
+	{
+		if(viewportX)
+		{
+			--viewportX;
+		}
 	}
 }
 

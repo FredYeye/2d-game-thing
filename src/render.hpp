@@ -23,7 +23,7 @@ class render
 	public:
 		const PixelArray* const GetPixelPtr() const;
 		void SetBackground(const uint8_t bg, const uint16_t x);
-		void DrawSprites(const std::vector<entity> &entityList);
+		void DrawSprites(const std::vector<entity> &entityList, const uint16_t viewportX);
 		void LoadResources();
 
 	private:
@@ -31,5 +31,6 @@ class render
 
 		PixelArray screen;
 		std::vector<std::vector<uint16_t>> backgrounds;
+		std::vector<uint16_t> bgWidth{352, 704};
 		std::vector<std::vector<uint16_t>> spriteSheets;
 };

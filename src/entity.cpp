@@ -105,12 +105,12 @@ const EntityState& entity::GetEntityState() const
 
 void entity::UpdateAnim()
 {
-	if(!frameList[entityType][uint8_t(entityState.action)].empty())
+	if(!frameList[entityType][entityState.action].empty())
 	{
-		if(++entityState.animFrame > frameList[entityType][uint8_t(entityState.action)][entityState.animState])
+		if(++entityState.animFrame > frameList[entityType][entityState.action][entityState.animState])
 		{
 			entityState.animFrame = 0;
-			if(++entityState.animState == animationList[entityType][uint8_t(entityState.action)].size())
+			if(++entityState.animState == animationList[entityType][entityState.action].size())
 			{
 				entityState.animState = 0;
 			}

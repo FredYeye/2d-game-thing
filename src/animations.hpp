@@ -2,6 +2,7 @@
 
 #include <vector>
 
+//use pointers to different entities? in sprite drawing for example
 
 const std::vector<std::vector<SpriteRect>> spriteRectList
 {

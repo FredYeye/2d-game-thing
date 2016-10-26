@@ -17,7 +17,7 @@ void render::SetBackground(const uint8_t bg, const uint16_t x)
 {
 	for(uint8_t y = 0; y < 220; ++y)
 	{
-		std::copy_n(backgrounds[bg].begin() + x + y * 352, 352, screen.begin() + y * 352);
+		std::copy_n(backgrounds[bg].begin() + x + y * bgWidth[bg], 352, screen.begin() + y * 352);
 	}
 }
 
@@ -25,25 +25,27 @@ void render::SetBackground(const uint8_t bg, const uint16_t x)
 void render::LoadResources()
 {
 	backgrounds.push_back(FileToU16vec("bg1.i15"));
+	backgrounds.push_back(FileToU16vec("bg2.i15"));
 	spriteSheets.push_back(FileToU16vec("spr1.i15"));
 	spriteSheets.push_back(FileToU16vec("spr2.i15"));
 }
 
 
-void render::DrawSprites(const std::vector<entity> &entityList)
+void render::DrawSprites(const std::vector<entity> &entityList, const uint16_t viewportX)
 {
+	//use viewportX
+
 	for(const auto &e : entityList)
 	{
-		const uint16_t type = e.GetEntityType();
-		const std::vector<uint16_t> &spriteSheet = spriteSheets[type];
+		const uint16_t &type = e.GetEntityType();
 
-		const EntityState state = e.GetEntityState();
+		const EntityState &state = e.GetEntityState();
 		const uint8_t &w = spriteRectList[type][state.action].w;
 		const uint8_t &h = spriteRectList[type][state.action].h;
 
-		const Position pos = e.GetPosition();
+		const Position &pos = e.GetPosition();
 
-		const std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheet, spriteRectList[type][animationList[type][state.action][state.animState]], e.GetFlip(), sheetWidth[type]);
+		const std::vector<uint16_t> sprite = SpriteFromSheet(spriteSheets[type], spriteRectList[type][animationList[type][state.action][state.animState]], e.GetFlip(), sheetWidth[type]);
 
 		for(uint16_t y = 0; y < h; ++y)
 		{
@@ -51,9 +53,9 @@ void render::DrawSprites(const std::vector<entity> &entityList)
 			{
 				if(sprite[x + y * w] & 1)
 				{
-					if(uint16_t(pos.x + x) < 352 && uint16_t(pos.y + y) < 220)
+					if(uint16_t(pos.x - viewportX + x) < 352 && uint16_t(pos.y + y) < 220)
 					{
-						screen[uint16_t(pos.x + x) + uint16_t(pos.y + y) * 352] = sprite[x + y * w];
+						screen[uint16_t(pos.x - viewportX + x) + uint16_t(pos.y + y) * 352] = sprite[x + y * w];
 					}
 				}
 			}
